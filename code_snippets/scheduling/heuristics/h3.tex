@@ -1,0 +1,20 @@
+% \begin{tabbing}Penalty {\bf for} late popular sessions {\bf in} $Timeslots$$:$\\
+% $~~~~$$late\_popular\_sessions$ $\leftarrow$ $0$\\
+% $~~~~${\bf for} $i$ {\bf in} $0..$length($Timeslots$)$-1$\\
+% $~~~~~~~~$$sorted$ $\leftarrow$ sort $Timeslots$$[$$i$$]$ by votes descending\\
+% $~~~~~~~~$$late\_popular\_sessions\_slot$ $\leftarrow$ $0$\\
+% $~~~~~~~~${\bf for} $j$ {\bf in} $0..$length($sorted$)$-2$\\
+% $~~~~~~~~~~~~$$late\_popular\_sessions\_slot$ $\leftarrow$ $late\_popular\_sessions\_slot$ $+$ $sorted$$[$$j$$]$ $*$ $sorted$$[$$j$ $+$ $1]$\\
+% $~~~~~~~~$$late\_popular\_sessions$ $\leftarrow$ $late\_popular\_sessions$ $+$ $late\_popular\_sessions\_slot$ $*$ $i$\\
+% $~~~~${\bf return} $late\_popular\_sessions$\\
+% \end{tabbing}
+\begin{tabbing}Penalty {\bf for} late popular sessions {\bf in} $\textit{Timeslots}$$:$\\
+$~~~~$$\textit{late\_popular\_sessions}$ $\leftarrow$ $0$\\
+$~~~~${\bf for} $\textit{i}$ {\bf in} $0..$length($\textit{Timeslots}$)$-1$\\
+$~~~~~~~~$$\textit{sorted}$ $\leftarrow$ sort $\textit{Timeslots}$$[$$\textit{i}$$]$ by votes descending\\
+$~~~~~~~~$$\textit{late\_popular\_sessions\_slot}$ $\leftarrow$ $0$\\
+$~~~~~~~~${\bf for} $\textit{j}$ {\bf in} $0..$length($\textit{sorted}$)$-2$\\
+$~~~~~~~~~~~~$$\textit{late\_popular\_sessions\_slot}$ $\leftarrow$ $\textit{late\_popular\_sessions\_slot}$ $+$ $\textit{sorted}$$[$$\textit{j}$$]$ $*$ $\textit{sorted}$$[$$\textit{j}$ $+$ $1]$\\
+$~~~~~~~~$$\textit{late\_popular\_sessions}$ $\leftarrow$ $\textit{late\_popular\_sessions}$ $+$ $\textit{late\_popular\_sessions\_slot}$ $*$ $\textit{i}$\\
+$~~~~${\bf return} $\textit{late\_popular\_sessions}$\\
+\end{tabbing}

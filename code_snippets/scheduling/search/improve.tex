@@ -1,0 +1,26 @@
+% \begin{tabbing}Improve $schedule$$:$\\
+% $~~~~$$schedule$ $\leftarrow$ randomly fill the schedule\\
+% $~~~~$$best\_score$ $\leftarrow$ set the best score as the current score\\
+% $~~~~$$max\_iterations$ $\leftarrow$ $3$ $*$ $schedule$$.$$capacity^2$\\
+% $~~~~${\bf for} $search\_iter$ {\bf in} $0..$$max\_iterations$\\
+% $~~~~~~~~$$swappable\_sessions$ $\leftarrow$ the list of swappable sessions on the schedule\\
+% $~~~~~~~~$$coin\_flip$ $\leftarrow$ \(\frac{50}{50}\) random boolean\\
+% $~~~~~~~~${\bf if} $coin\_flip$\\
+% \input{code_snippets/scheduling/search/minimize_penalty}
+% $~~~~~~~~${\bf else}\\
+% \input{code_snippets/scheduling/search/simulated_annealing}
+% $~~~~${\bf return} $best\_score$\\
+% \end{tabbing}
+\begin{tabbing}Improve $\textit{schedule}$$:$\\
+$~~~~$$\textit{schedule}$ $\leftarrow$ randomly fill the $\textit{schedule}$\\
+$~~~~$$\textit{best\_score}$ $\leftarrow$ set the best score as the current score\\
+$~~~~$$\textit{max\_iterations}$ $\leftarrow$ $3$ $*$ $\textit{schedule}$$.$$\textit{capacity}$\\
+$~~~~${\bf for} $\textit{search\_iter}$ {\bf in} $0..$$\textit{max\_iterations}$\\
+$~~~~~~~~$$\textit{swappable\_sessions}$ $\leftarrow$ the list of swappable sessions on the $\textit{schedule}$\\
+$~~~~~~~~$$\textit{coin\_flip}$ $\leftarrow$ random boolean\\
+$~~~~~~~~${\bf if} $\textit{coin\_flip}$\\
+\input{code_snippets/scheduling/search/minimize_penalty}
+$~~~~~~~~${\bf else}\\
+\input{code_snippets/scheduling/search/simulated_annealing}
+$~~~~${\bf return} $\textit{best\_score}$\\
+\end{tabbing}

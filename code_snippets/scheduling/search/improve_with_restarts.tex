@@ -1,0 +1,15 @@
+\begin{tabbing}Improve $\textit{schedule}$ with specified number of $\textit{restarts}$$:$\\
+$~~~~$$\textit{original\_schedule}$ $\leftarrow$ $\textit{copy}$($\textit{schedule}$)\\
+$~~~~$$best\_score$ $\leftarrow$ $schedule$$.$$\textit{improve}$()\\
+$~~~~$$best\_data$ $\leftarrow$ $copy$($schedule$)\\
+\\
+$~~~~${\bf for} $i$ {\bf in} $0..$$restarts$\\
+$~~~~~~~~$$schedule$ $\leftarrow$ $copy$($original\_schedule$)\\
+$~~~~~~~~$$new\_score$ $\leftarrow$ $schedule$$.$$improve$()\\
+$~~~~~~~~${\bf if} $new\_score$ $<$ $best\_score$\\
+$~~~~~~~~~~~~$$best\_score$ $\leftarrow$ $new\_score$\\
+$~~~~~~~~~~~~$$best\_data$ $\leftarrow$ $copy$($schedule$)\\
+\\
+$~~~~$$schedule$ $\leftarrow$ $best\_data$\\
+$~~~~${\bf return} $best\_score$\\
+\end{tabbing}

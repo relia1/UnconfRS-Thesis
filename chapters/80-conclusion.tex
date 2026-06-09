@@ -1,0 +1,47 @@
+\chapter{Conclusions and Future Work}\label{ch:conclusions}
+This chapter presents the conclusions drawn from the development of UnconfRS. It revisits the two research questions regarding the use of scheduling techniques and Rust as the implementation language. This is followed by a future work section that is organized according to implementation scope and priority.
+
+\section{Conclusions}
+This thesis aimed to answer two questions: whether modern scheduling techniques can be used to create an effective Unconference management tool and whether Rust is an effective language for implementing the backend and the scheduler.
+
+Regarding the first question, UnconfRS has demonstrated that local search with random restarts can be applied to the Unconference scheduling problem. By implementing penalty functions that account for session popularity, speaker conflicts, topic clustering, and the timing of when sessions occur, the scheduler produces reasonable schedules. However, as discussed in the future work, the penalty functions would benefit from normalization analysis. Evaluation using real Unconference data would validate that approach.
+
+Regarding the second question, Rust proved to be well-suited for implementing the backend and the scheduler. The type system and ownership model provided compile-time guarantees that helped prevent runtime errors during development. The ecosystem was able to be leveraged with mature crates such as Axum (and various other tokio-rs crates), Askama, SQLx, Serde, and Tower to build the web application. However, Rust does come with a steeper learning curve. Some implementations become more verbose compared to conventional full-stack frameworks. With that said, the compile-time guarantees provide greater confidence in the correctness of what was implemented.
+
+Overall, UnconfRS provides a digital Unconference management tool. It supports Unconference session proposals, session voting, and automatic schedule generation. The schedules that are generated take into account contextual information about sessions and participants to create a reasonably good result. In cases where changes need to be made, site admins have the flexibility to make manual tweaks.
+%
+\section{Future Work}
+While UnconfRS provides a good starting point for digital Unconference management, there are areas where additional work would be beneficial. These have been organized by estimated implementation scope and priority.
+
+\subsection{Near-Term Improvements}
+These are high-priority improvements that are limited in scope and require minimal architectural changes.\\\\
+%
+\headerParagraph{Real-World Data}{
+The current scheduler has been tested with synthetic data. Evaluating UnconfRS with data from real Unconferences would validate the effectiveness of the scheduling approach and penalty functions. This evaluation would also identify whether the heuristics align with what the organizers and participants desired. This would provide valuable data for the future work relating to the scheduling heuristics.
+}\\\\
+%
+\headerParagraph{Scheduling Heuristics}{
+Current penalty functions attempt to minimize undesirable traits in the schedule, such as having multiple popular sessions occurring at the same time, desirable sessions missing from the schedule, desirable sessions late in the day, same topics in the same time slot, and sessions that speakers want to attend happening while they are leading a session. However, these all scale differently. Some are dependent on the size of the schedule. Future work would include analysis of these heuristics to normalize their contributions to the overall score.
+}\\\\
+%
+\headerParagraph{Multi-Threaded Scheduling}{
+Currently the scheduler runs its random restarts sequentially, with each restart running an iteration of scheduling before the next begins. The runs are independent of one another and is parallelizable. Future work could add optional multi-threading to run these in parallel if the user desired.
+}\\\\
+%
+\headerParagraph{Frontend Enhancements}{
+The current frontend, based on Askama templates, Bootstrap, and the HTML 5 drag and drop API, provides the main functionality but leaves room for improvement. Accessibility enhancements are an area that would benefit UnconfRS. The ability for session creators to record attendance and notes within this platform is a logical inclusion. Additionally, the application currently makes use of browser alert popups. These should be replaced with Bootstrap alternatives.
+}
+%
+\subsection{Longer-Term Improvements}
+These are either lower priority improvements or require a larger effort.\\\\
+%
+\headerParagraph{Alternative Scheduling Methods}{
+In its current implementation, UnconfRS utilizes local search. Analysis of a variety of alternative scheduling methods would provide a clearer idea of what the best approach is. The best approach might vary from Unconference to Unconference as well. For new methods implemented, they should be able to be conditionally enabled through an environment variable. 
+}\\\\
+\headerParagraph{Registration}{
+Improve the UnconfRS registration workflow.
+}\\\\
+%
+\headerParagraph{Frontend Rewrite}{
+Since the backend of UnconfRS is written in Rust, rewriting the frontend using a Rust-based framework would unify both to be written in the same language. This would allow data structures to be shared between the frontend and backend, removing potential inconsistencies. Additionally, a Rust-based frontend would benefit from compile-time guarantees and the type system.
+}

@@ -1,0 +1,20 @@
+%\begin{tabbing}Penalty {\bf for} multiple concurrent popular sessions across $Timeslots$$:$\\
+%$~~~~$$popular\_conflict$ $\leftarrow$ $0$\\
+%$~~~~${\bf for} $i$ {\bf in} $0..$length($Timeslots$)$-1$\\
+%$~~~~~~~~$$sorted$ $\leftarrow$ sort $Timeslots$$[$$i$$]$ by votes descending\\
+%$~~~~~~~~$$popular\_conflict\_slot$ $\leftarrow$ $0$\\
+%$~~~~~~~~${\bf for} $j$ {\bf in} $0..$length($sorted$)$-2$\\
+%$~~~~~~~~~~~~$$popular\_conflict\_slot$ $\leftarrow$ $popular\_conflict\_slot$ $+$ $sorted$$[$$j$$]$ %$*$ $sorted$$[$$j$ $+$ $1]$\\
+%$~~~~~~~~$$popular\_conflict$ $\leftarrow$ $popular\_conflict$ $+$ $popular\_conflict\_slot$\\
+%$~~~~${\bf return} $popular\_conflict$\\
+%\end{tabbing}
+\begin{tabbing}Penalty {\bf for} multiple concurrent popular sessions across $\textit{Timeslots}$$:$\\
+$~~~~$$\textit{popular\_conflict}$ $\leftarrow$ $0$\\
+$~~~~${\bf for} $\textit{i}$ {\bf in} $0..$length($\textit{Timeslots}$)$-1$\\
+$~~~~~~~~$$\textit{sorted}$ $\leftarrow$ sort $\textit{Timeslots}$$[$$\textit{i}$$]$ by votes descending\\
+$~~~~~~~~$$\textit{popular\_conflict\_slot}$ $\leftarrow$ $0$\\
+$~~~~~~~~${\bf for} $\textit{j}$ {\bf in} $0..$length($\textit{sorted}$)$-2$\\
+$~~~~~~~~~~~~$$\textit{popular\_conflict\_slot}$ $\leftarrow$ $\textit{popular\_conflict\_slot}$ $+$ $\textit{sorted}$$[$$\textit{j}$$]$ $*$ $\textit{sorted}$$[$$\textit{j}$ $+$ $1]$\\
+$~~~~~~~~$$\textit{popular\_conflict}$ $\leftarrow$ $\textit{popular\_conflict}$ $+$ $\textit{popular\_conflict\_slot}$\\
+$~~~~${\bf return} $\textit{popular\_conflict}$\\
+\end{tabbing}

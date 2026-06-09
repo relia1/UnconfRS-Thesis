@@ -1,0 +1,24 @@
+% \begin{tabbing}Penalty {\bf for} sessions {\bf in} $Unassigned\_Sessions$ list more popular than {\bf in} $Assigned\_Sessions$ list$:$\\
+% $~~~~$$missing\_popular\_sessions$ $\leftarrow$ $0$\\
+% $~~~~${\bf for} each $Assigned$ session {\bf in} $Assigned\_Sessions$$:$\\
+% $~~~~~~~~$$missing\_popular\_sessions\_slot$ $\leftarrow$ $0$\\
+% $~~~~~~~~${\bf for} each $Unassigned$ session {\bf in} $Unassigned\_Sessions$$:$\\
+% $~~~~~~~~~~~~${\bf if} $Unassigned$ $>$ $Assigned$\\
+% $~~~~~~~~~~~~~~~~$$difference$ $\leftarrow$ $Unassigned$ $-$ $Assigned$\\
+% $~~~~~~~~~~~~~~~~$$missing\_popular\_sessions\_slot$ $\leftarrow$ $missing\_popular\_sessions\_slot$ $+$ $difference$\\
+% $~~~~~~~~$$missing\_popular\_sessions\_slot$ $\leftarrow$ $missing\_popular\_sessions\_slot$ $*$ $15$\\
+% $~~~~~~~~$$missing\_popular\_sessions$ $\leftarrow$ $missing\_popular\_sessions$ $+$ $missing\_popular\_sessions\_slot$\\
+% $~~~~${\bf return} $missing\_popular\_sessions$\\
+% \end{tabbing}
+\begin{tabbing}Penalty {\bf for} sessions {\bf in} $\textit{Unassigned\_Sessions}$ list more popular than {\bf in} $\textit{Assigned\_Sessions}$ list$:$\\
+$~~~~$$\textit{missing\_popular\_sessions}$ $\leftarrow$ $0$\\
+$~~~~${\bf for} each $\textit{Assigned}$ session {\bf in} $\textit{Assigned\_Sessions}$$:$\\
+$~~~~~~~~$$\textit{missing\_popular\_sessions\_slot}$ $\leftarrow$ $0$\\
+$~~~~~~~~${\bf for} each $\textit{Unassigned}$ session {\bf in} $\textit{Unassigned\_Sessions}$$:$\\
+$~~~~~~~~~~~~${\bf if} $\textit{Unassigned}$ $>$ $\textit{Assigned}$\\
+$~~~~~~~~~~~~~~~~$$\textit{difference}$ $\leftarrow$ $\textit{Unassigned}$ $-$ $\textit{Assigned}$\\
+$~~~~~~~~~~~~~~~~$$\textit{missing\_popular\_sessions\_slot}$ $\leftarrow$ $\textit{missing\_popular\_sessions\_slot}$ $+$ $\textit{difference}$\\
+$~~~~~~~~$$\textit{missing\_popular\_sessions\_slot}$ $\leftarrow$ $\textit{missing\_popular\_sessions\_slot}$ $*$ $15$\\
+$~~~~~~~~$$\textit{missing\_popular\_sessions}$ $\leftarrow$ $\textit{missing\_popular\_sessions}$ $+$ $\textit{missing\_popular\_sessions\_slot}$\\
+$~~~~${\bf return} $\textit{missing\_popular\_sessions}$\\
+\end{tabbing}

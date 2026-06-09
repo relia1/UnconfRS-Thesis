@@ -1,0 +1,30 @@
+% \begin{tabbing}Penalty {\bf for} concurrent $sessions$ with same $tag\_id$ {\bf in} $Timeslots$$:$\\
+% $~~~~$$tag\_counts$ $\leftarrow$ initialize empty HashMap of $tag\_id$ $\rightarrow$ ($votes$$,$ $count$)\\
+% $~~~~$$tag\_conflict$ $\leftarrow$ $0$\\
+% $~~~~${\bf for} $timeslot$ {\bf in} $Timeslots$\\
+% $~~~~~~~~$$tag\_counts$ $\leftarrow$ reset the HashMap each iteration\\
+% $~~~~~~~~$\\
+% $~~~~~~~~${\bf for} $session$ {\bf in} $timeslot$\\
+% $~~~~~~~~~~~~${\bf if} $session$$.$$session\_id$ and $session$$.$$tag\_id$ exist\\
+% $~~~~~~~~~~~~~~~~$$tag\_counts$$[$$session$$.$$tag\_id$$].$$votes$ $\leftarrow$ $tag\_counts$$[$$session$$.$$tag\_id$$].$$votes$ $+$ $session$$.$$num\_votes$\\
+% $~~~~~~~~~~~~~~~~$$tag\_counts$$[$$session$$.$$tag\_id$$].$$count$ $\leftarrow$ $tag\_counts$$[$$session$$.$$tag\_id$$].$$count$ $+$ $1$\\
+% \\
+% $~~~~~~~~${\bf for} ($votes$$,$ $count$) {\bf in} $tag\_counts$ values\\
+% $~~~~~~~~~~~~$$tag\_conflict$ $\leftarrow$ $tag\_conflict$ $+$ $votes$ $*$ ($count$ $-$ $1$)\\
+% $~~~~${\bf return} $tag\_conflict$\\
+% \end{tabbing}
+\begin{tabbing}Penalty {\bf for} concurrent sessions with same $\textit{tag\_id}$ {\bf in} $\textit{Timeslots}$$:$\\
+$~~~~$$\textit{tag\_counts}$ $\leftarrow$ initialize empty HashMap of $\textit{tag\_id}$ $\rightarrow$ ($\textit{votes}$$,$ $\textit{count}$)\\
+$~~~~$$\textit{tag\_conflict}$ $\leftarrow$ $0$\\
+$~~~~${\bf for} $\textit{timeslot}$ {\bf in} $\textit{Timeslots}$\\
+$~~~~~~~~$$\textit{tag\_counts}$ $\leftarrow$ reset the HashMap each iteration\\
+\\
+$~~~~~~~~${\bf for} $\textit{session}$ {\bf in} $\textit{timeslot}$\\
+$~~~~~~~~~~~~${\bf if} $\textit{session}$$.$$\textit{session\_id}$ and $\textit{session}$$.$$\textit{tag\_id}$ exist\\
+$~~~~~~~~~~~~~~~~$$\textit{tag\_counts}$$[$$\textit{session}$$.$$\textit{tag\_id}$$].$$\textit{votes}$ $\leftarrow$ $\textit{tag\_counts}$$[$$\textit{session}$$.$$\textit{tag\_id}$$].$$\textit{votes}$ $+$ $\textit{session}$$.$$\textit{num\_votes}$\\
+$~~~~~~~~~~~~~~~~$$\textit{tag\_counts}$$[$$\textit{session}$$.$$\textit{tag\_id}$$].$$\textit{count}$ $\leftarrow$ $\textit{tag\_counts}$$[$$\textit{session}$$.$$\textit{tag\_id}$$].$$\textit{count}$ $+$ $1$\\
+\\
+$~~~~~~~~~~~~${\bf for} ($\textit{votes}$$,$ $\textit{count}$) {\bf in} $\textit{tag\_counts}$ values\\
+$~~~~~~~~~~~~~~~~$$\textit{tag\_conflict}$ $\leftarrow$ $\textit{tag\_conflict}$ $+$ $\textit{votes}$ $*$ ($\textit{count}$ $-$ $1$)\\
+$~~~~${\bf return} $\textit{tag\_conflict}$\\
+\end{tabbing}

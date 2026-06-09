@@ -1,0 +1,164 @@
+\chapter{An Unconference Software Solution}
+\section{UnconfRS}
+UnconfRS is a full stack web application that allows users to propose sessions and vote on sessions they are interested in. They can also view a populated schedule that contains information about the session and where the session is located. Additionally there is functionality for admin and facilitators to make edits to sessions others have submitted (e.g. choosing a more appropriate tag for a session). The admin alone can generate a schedule which uses the known information of who is putting on a session at a specific time and which sessions users expressed interest in to attempt to create a best schedule. The admin also has fine control with being able to drag and drop the sessions already on the schedule. 
+\subsection{Creating an agenda}
+There are three main steps for a user to participate in agenda creation: registering a new account through the UnconfRS website, proposing sessions on the sessions page, and voting on sessions they would like to attend.\\
+
+\subsection{Scheduling For UnconfRS}
+Once an agenda has been created, the admin needs to create the schedule. The first step in that process is clicking the button Populate Schedule on the unconf schedule page. This attempts to create a best schedule that avoids conflicts and tries to make sure people are able to see the sessions they want. At this point the admin can make manual changes to the schedule as well. They can remove or add to the schedule, as well as drag and drop sessions on the schedule to move when the sessions are happening.\\
+
+\section{Implementation}
+This section describes the technical decisions for the implementation of UnconfRS. From the choice of Rust as the programming language, system design and architecture, frontend, backend, database, security, and the scheduling approach.
+
+\subsection{Why Rust}
+Rust was chosen because it is a modern programming language that provides performance, reliability, and productivity. The scheduler needs to evaluate many candidate solutions quickly, so a performant language was desired. The type system and ownership model ensure many potential bugs are caught at compile time. Additionally, the existing ecosystem of crates meets the majority of the needs for this project.
+%"https://rust-lang.org/"\\
+%Performance, Reliability, Productivity
+\subsection{System Design and Architecture}
+The makeup of UnconfRS can be divided up into three main parts consisting of a Rust-based backend (Axum), PostgreSQL database (SQLx), and a mostly server-side rendered frontend (Askama) with JavaScript enhancements.\\
+\\The project is organized as three Cargo workspaces: \texttt{server}, \texttt{scheduler}, and \texttt{test data creation}. The \texttt{server} workspace contains all aspects relating to the frontend, backend, and database. The \texttt{scheduler} workspace contains the scheduling library that gets used when generating a schedule. The \texttt{test data creation} workspace contains a utility for generating test data. Having the separate workspaces makes it clear what the code in the workspace is responsible for. It also has the benefit of lowering compilation time.\\
+\\Overall the web application follows an MVC (Model View Controller) architecture design pattern, where models manage data/business logic, views handle the user interface, and controllers act as an intermediary between models and views. This pattern provides a straightforward way for separating code according to specific responsibilities.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\linewidth]{figs/high_level_diagram.png}
+    \caption{High level diagram showing the different areas of implementation}
+    \label{fig:enter-label}
+\end{figure}
+\clearpage
+\subsection{Frontend}
+The frontend utilizes Askama for server-side template rendering, chosen for its compile time type safety. DataTables is used for displaying the table of sessions in a responsive and interactive manner. Bootstrap 5.3.8 is utilized for responsive styling. The HTML 5 Drag and Drop API is used to allow for schedule manipulation. For client-side storage, IDB-Keyval is used.
+
+\subsection{Backend}
+The backend is built with Axum (by Tokio), which is a web application framework written in Rust that focuses on ergonomics and modularity. It uses the Tokio async runtime for concurrent I/O. Axum was chosen here due to prior familiarity and its growing adoption in the Rust community. For middleware and authentication/authorization various Tower crates and axum-login are used. For serializing and deserializing data structures Serde is used.
+
+\subsection{Database}
+For the database, PostgreSQL was chosen mostly due to prior familiarity, but it is also a powerful open source relational database system. For working with the database in the backend, the crate SQLx was chosen. This was chosen due to it featuring compile time checked queries.
+
+\subsection{Security Considerations}
+UnconfRS implements session-based authentication and role-based authorization for access to the application.\\\\
+\textbf{Authentication}:
+The application uses axum-login for session-based authentication. The passwords are stored hashed using bcrypt.\\
+Login workflow:
+\begin{enumerate}
+    \item User submits Unconference password in order to access the site
+    \item On success a server-side session is created in PostgreSQL
+    \item Session ID is stored in a secure HTTP only cookie
+    \item User submits credentials in the account login form
+    \item On success a new session associated to the logged in user replaces the one for site access (in the database and in the cookie)
+\end{enumerate}
+
+\textbf{Authorization}:
+Permission based access is implemented also using axum-login with different levels of access:
+
+\begin{table}[hbtp]
+    \centering
+    \begin{tabular}{|m{12em}| ccccc|}
+      \hline
+     ~ & \multicolumn{2}{|c}{Unauthorized} & \multicolumn{3}{c|}{Authorized} \\
+     \hline
+     Scenarios & Public & User & User & Staff & Admin\\
+     \hline
+         Unconf login page &  \checkmark & \checkmark & \checkmark & \checkmark & \checkmark\\
+         \hline
+         Read-only site access & X & \checkmark & \checkmark & \checkmark & \checkmark\\
+         \hline
+         CRUD actions on their own sessions & X & X & \checkmark & \checkmark & \checkmark\\
+         \hline
+         Voting on sessions & X & X & \checkmark & \checkmark & \checkmark\\
+         \hline
+         CRUD actions on any sessions & X & X & X & \checkmark & \checkmark\\
+         \hline
+         Create session for a user & X & X & X & \checkmark & \checkmark\\
+         \hline
+         Register user on their behalf & X & X & X & \checkmark & \checkmark\\
+         \hline
+         CRUD actions for tags & X & X & X & X & \checkmark \\
+         \hline
+         Schedule setup (adding rooms and timeslots) & X & X & X & X & \checkmark \\
+         \hline
+         Manipulating the schedule (adding/removing sessions to the schedule or running the scheduler) & X & X & X & X & \checkmark \\
+         \hline
+    \end{tabular}
+    \caption{Actions unauthorized/authorized users can take depending on their role}
+    \label{tab:placeholder}
+\end{table}
+\FloatBarrier
+%\begin{itemize}
+%    \item \textbf{User} (default): Can submit sessions, update/delete sessions %they created, vote for sessions, and view the schedule
+%    \item \textbf{Facilitator} (staff): Can do all that a User can, but they can %also create sessions on behalf of a user, make edits to any session, and register %a user on their behalf, 
+%    \item \textbf{Admin} (superuser): Can do all that Staff can, but they can %also create/update/delete the tags that sessions can use, perform the setup for %the schedule (adding rooms and timeslots), and manipulation of the schedule %(adding sessions manually or running the scheduler).
+%\end{itemize}
+
+%How the application utilizes authorization and authentication:
+%\begin{itemize}
+%    \item \textbf{Routes}: Routes are broken up into 5 parts:
+%    \begin{itemize}
+%        \item No Unconference authentication (can only access Unconference login)
+%        \item Unconference authentication but no account authentication (read %only view with User level permissions)
+%        \item Unconference authentication and account authentication at User %permission level (read/write access with User level permissions)
+%        \item Unconference authentication and account authentication at %Facilitator permission level (read/write access with Facilitator level %permissions)
+%        \item Unconference authentication and account authentication at Admin %permission level (read/write access with Admin level permissions)
+%    \end{itemize}
+%    \item \textbf{Middleware}: Routes utilize middleware to ensure users have the %specified permissions
+%    \item \textbf{Ownership}: The application makes sure sessions can only be %updated by the users that created them or by Admin/Facilitators
+%    \item \textbf{Askama Templating}: By passing the Askama templates the %permission levels we can conditionally include source files that require higher %level of permissions
+%\end{itemize}
+\subsection{Scheduling}
+As mentioned in the previous scheduling chapter, trying to create schedules for Unconferences creates a state space that would take an unreasonable amount of time to search. The application has access to data so instead of an uninformed brute force search an informed search can be done. The scheduler has access to the number of votes each session received, session tag ID, session speaker ID, and which sessions each speaker voted for. Having that information, heuristics can be created to apply a score to the schedule, where the score is a collection of penalties assessed based on the data. Then we can use local search for the strategy on trying to find the best schedule.
+
+\subsubsection{Heuristics}
+For the scheduler the heuristics are made up of five penalty functions that assess scores based on scenarios that lead to a worse schedule. \\\\
+%
+%
+\textbf{Penalize Conflicting Popular Sessions}: For each timeslot, it sorts the sessions, then sums the products of adjacent pairs by their vote counts. This ends up with higher scores for schedules that have high vote sessions happening at the same time as other high vote sessions.
+\begin{pseudocode}{Penalty for concurrent popular sessions}
+    \input{code_snippets/scheduling/heuristics/h1}
+\end{pseudocode}
+
+\textbf{Penalize Popular Session Missing}: This penalty function goes through every scheduled session and compares it with every unscheduled session. For every unscheduled session that has more votes than the scheduled one, a penalty is added proportional to the difference of votes.
+\begin{pseudocode}{Penalty for popular sessions missing from the schedule}
+    \input{code_snippets/scheduling/heuristics/h2}
+\end{pseudocode}
+
+\textbf{Penalize Late Popular Sessions}: For each timeslot, it sorts the sessions, then sums the products of adjacent pairs by their vote counts. Each timeslot sum is multiplied by timeslot index before being added to the total sum. This ends up with popular sessions that happen later in the day incurring a larger penalty.
+\begin{pseudocode}{Penalty for popular sessions occurring later in the day.}
+    \input{code_snippets/scheduling/heuristics/h3}
+\end{pseudocode}
+
+\textbf{Penalize Same Topic Timeslots}: This penalty function iterates each of the timeslots. Within each timeslot, construct a HashMap that tracks for each tag\_id the total votes and number of occurrences. For every item in the HashMap add to the penalty score equal to $votes$ $*$ $($$count$ $-$ $1$$)$.
+\begin{pseudocode}{Penalty for multiple sessions in the same timeslot having the same topic.}
+    \input{code_snippets/scheduling/heuristics/h4}
+\end{pseudocode}
+
+\textbf{Penalize Speaker Voting Conflicts}: This penalty function iterates each of the timeslots. For each session, check whether the session's speaker has voted on sessions happening at the same time. For each session happening at the same time that received a vote add to the penalty score the product of the two session vote amounts.
+\begin{pseudocode}{Penalty for sessions a speaker has voted for occurring while they are scheduled for leading a session.}
+    \input{code_snippets/scheduling/heuristics/h5}
+\end{pseudocode}
+
+\textbf{Weight the Scores}: This function takes the values from the penalty functions (h1, h2, h3, h4, h5) and applies a predetermined modifier to the values based on how important that heuristic is. Then it adds up all the modified values returning a unified score. These weights were determined by trial and error.
+\begin{pseudocode}{Weighting the penalty scores}
+    \input{code_snippets/scheduling/heuristics/weight}
+\end{pseudocode}
+
+\subsubsection{Local Search}
+The implementation of local search for this project uses a handful of strategies to try and find an optimal schedule. These strategies are random restarts, minimizing the penalty score, and a simplified simulated annealing.
+
+\textbf{Random Restarts}\\In this strategy the scheduler runs a variable number of times. Each time the scheduler is run a different initial random state for the schedule is created. Only the best of the scheduler runs is kept. The goal of doing this is that by having many different starting states, a global minimum is more likely to be found.
+\begin{pseudocode}{Run the scheduler from various random states}
+\input{code_snippets/scheduling/search/improve_with_restarts}
+\end{pseudocode}
+
+\textbf{Coin Flip}\\
+Perform a \(\frac{50}{50}\) "coin flip", heads (true), improve the schedule  by minimizing the penalty score this iteration. On tails (false), perform simplified simulated annealing.
+\begin{pseudocode}{Find minimum neighbor or perform simulated annealing}
+\input{code_snippets/scheduling/search/coin_flip}
+\end{pseudocode}
+
+\textbf{Simplified Simulated Annealing}\\
+Take a random swappable session and swap it with a different swappable session or an unassigned session. If this improved the schedule, accept the move. Otherwise accept the move with probability \(\frac{search\_iter}{max\_iterations}\). By accepting moves that make the schedule worse early on and fewer as you get closer to the end, you create a more broadly searched space where improvement has a good chance of finding a global minimum.\\\\
+
+\textbf{Minimizing the Penalty Score}\\
+For every swappable session on the schedule, try swapping it with swappable sessions after it and all unassigned sessions. Out of all the swaps, if the swap that has the lowest score has a score lower than the original score, then that swap is accepted. The score is updated to reflect that. The goal by taking the best move that can be made is that every step is one towards the best schedule. However, this could lead to a local minimum.
+\begin{pseudocode}{Improve the schedule alternating between a best move local search and simulated annealing.}
+\input{code_snippets/scheduling/search/improve}
+\end{pseudocode}

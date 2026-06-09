@@ -1,0 +1,13 @@
+\begin{tabbing}Given heuristic values $h1$$,$ $h2$$,$ $h3$$,$ $h4$$,$ and $h5$ {\bf return} a unified score$:$\\
+$~~~~$$conflicting$ $\leftarrow$ $0.5$\\
+$~~~~$$missing$ $\leftarrow$ $0.75$\\
+$~~~~$$late$ $\leftarrow$ $0.1$\\
+$~~~~$$same\_tag$ $\leftarrow$ $0.3$\\
+$~~~~$$speaker\_conflict$ $\leftarrow$ $0.1$\\
+\\
+$~~~~${\bf return} $conflicting$ $*$ $h1$ $+$\\
+$~~~~~~~~$$missing$ $*$ $h2$ $+$\\
+$~~~~~~~~$$late$ $*$ $h3$ $+$\\
+$~~~~~~~~$$same\_tag$ $*$ $h4$ $+$\\
+$~~~~~~~~$$speaker\_conflict$ $*$ $h5$\\
+\end{tabbing}

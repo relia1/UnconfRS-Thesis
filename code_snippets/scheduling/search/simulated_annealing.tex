@@ -1,0 +1,24 @@
+% $~~~~~~~~~~~~$$pos1$ $\leftarrow$ randomly chosen swappable session\\
+% $~~~~~~~~~~~~$swap $pos1$ with a randomly chosen $session$ on the schedule or off the schedule\\
+% $~~~~~~~~~~~~${\bf if} the swap improved the score\\
+% $~~~~~~~~~~~~~~~~$$best\_score$ $\leftarrow$ update the score\\
+% $~~~~~~~~~~~~${\bf else}\\
+% $~~~~~~~~~~~~~~~~$$temperature\_offset$ $\leftarrow$ $0.25$ // last 25\% of iterations does not take worsening moves\\
+% $~~~~~~~~~~~~~~~~$$progress\_through\_iterations$ $\leftarrow$ $\frac{search\_iter}{max\_iterations}$\\
+% $~~~~~~~~~~~~~~~~$$temperature$ $\leftarrow$ $max$($1.0$ - ($progress\_through\_iterations$ + $temperature\_offset$), $0.0$)\\
+% $~~~~~~~~~~~~~~~~${\bf if} $random\_bool$($temperature$)\\
+% $~~~~~~~~~~~~~~~~~~~~$$best\_score$ $\leftarrow$ update the score\\
+% $~~~~~~~~~~~~~~~~${\bf else}\\
+% $~~~~~~~~~~~~~~~~~~~~$reverse the worsening move\\
+$~~~~~~~~~~~~$$\textit{pos1}$ $\leftarrow$ randomly chosen swappable $\textit{session}$\\
+$~~~~~~~~~~~~$swap $\textit{pos1}$ with a randomly chosen $\textit{session}$ on or off the schedule\\
+$~~~~~~~~~~~~${\bf if} the swap improved the score\\
+$~~~~~~~~~~~~~~~~$$\textit{best\_score}$ $\leftarrow$ update the score\\
+$~~~~~~~~~~~~${\bf else}\\
+$~~~~~~~~~~~~~~~~$$\textit{temperature\_offset}$ $<$ $0.25$ $//$ last $25\%$ of iterations {\bf do} not take worsening moves\\
+$~~~~~~~~~~~~~~~~$$\textit{progress\_through\_iterations}$ $\leftarrow$ $\frac{search\_iter}{max\_iterations}$\\
+$~~~~~~~~~~~~~~~~$temperature $\leftarrow$ max($1.0$ $-$ ($\textit{progress\_through\_iterations}$ $+$ $\textit{temperature\_offset}$)$,$ $0.0$)\\
+$~~~~~~~~~~~~~~~~${\bf if} $\textit{random\_bool}$(temperature)\\
+$~~~~~~~~~~~~~~~~~~~~$$\textit{best\_score}$ $\leftarrow$ update the score\\
+$~~~~~~~~~~~~~~~~${\bf else}\\
+$~~~~~~~~~~~~~~~~~~~~$reverse the worsening move\\

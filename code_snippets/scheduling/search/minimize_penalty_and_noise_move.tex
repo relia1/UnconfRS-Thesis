@@ -1,0 +1,59 @@
+\begin{tabbing}Improve $schedule$$:$\\
+$~~~~$$schedule$ $\leftarrow$ $schedule$$.$$randomly\_fill\_available\_spots$()\\
+$~~~~$$current\_score$ $\leftarrow$ $best\_score$ $\leftarrow$ $schedule$$.$$score$()\\
+$~~~~$$max\_iterations$ $\leftarrow$ $3$ $*$ $schedule$$.$$capacity$ $**$ $2$\\
+$~~~~$$best\_action$ $\leftarrow$ $None$\\
+\\
+$~~~~${\bf for} $\_$ {\bf in} $0..$$max\_iterations$\\
+$~~~~~~~~$$swappable\_sessions$ $\leftarrow$ $schedule$$.$$get\_swappable\_sessions$()\\
+$~~~~~~~~$$coin\_flip$ $\leftarrow$ $random\_bool$($0.5$)\\
+$~~~~~~~~${\bf if} $coin\_flip$\\
+$~~~~~~~~~~~~${\bf for} $i$ {\bf in} $0..$$length$($swappable\_sessions$)\\
+$~~~~~~~~~~~~~~~~$$pos1$ $\leftarrow$ $swappable\_sessions$$[$$i$$]$\\
+$~~~~~~~~~~~~~~~~${\bf for} $j$ {\bf in} ($i$ $+$ $1$)$..$$length$($swappable\_sessions$)\\
+$~~~~~~~~~~~~~~~~~~~~$$pos2$ $\leftarrow$ $swappable\_sessions$$[$$j$$]$\\
+$~~~~~~~~~~~~~~~~~~~~$$action$ $\leftarrow$ $swap\_scheduled$($pos1$$,$ $pos2$)\\
+$~~~~~~~~~~~~~~~~~~~~$$schedule$ $\leftarrow$ $schedule$$.$$apply\_action$($action$)\\
+$~~~~~~~~~~~~~~~~~~~~$\\
+$~~~~~~~~~~~~~~~~~~~~$$new\_score$ $\leftarrow$ $schedule$$.$$score$()\\
+$~~~~~~~~~~~~~~~~~~~~${\bf if} $new\_score$ $<$ $best\_score$\\
+$~~~~~~~~~~~~~~~~~~~~~~~~$$best\_score$ $\leftarrow$ $new\_score$\\
+$~~~~~~~~~~~~~~~~~~~~~~~~$$best\_action$ $\leftarrow$ $action$\\
+\\
+$~~~~~~~~~~~~~~~~~~~~$$schedule$ $\leftarrow$ $schedule$$.$$reverse\_action$($action$)\\
+\\
+$~~~~~~~~~~~~~~~~${\bf for} $k$ {\bf in} $0..$$length$($schedule$$.$$unassigned\_sessions$)\\
+$~~~~~~~~~~~~~~~~~~~~$let $pos2$ $\leftarrow$ $k$\\
+$~~~~~~~~~~~~~~~~~~~~$$action$ $\leftarrow$ $swap\_unassigned$($pos1$$,$ $pos2$)\\
+$~~~~~~~~~~~~~~~~~~~~$$schedule$ $\leftarrow$ $schedule$$.$$apply\_action$($action$)\\
+\\
+$~~~~~~~~~~~~~~~~~~~~$$new\_score$ $\leftarrow$ $schedule$$.$$score$()\\
+$~~~~~~~~~~~~~~~~~~~~${\bf if} $new\_score$ $<$ $best\_score$\\
+$~~~~~~~~~~~~~~~~~~~~~~~~$$best\_score$ $\leftarrow$ $new\_score$\\
+$~~~~~~~~~~~~~~~~~~~~~~~~$$best\_action$ $\leftarrow$ $action$\\
+\\
+$~~~~~~~~~~~~~~~~~~~~$$schedule$ $\leftarrow$ $schedule$$.$$reverse\_action$($action$)\\
+$~~~~~~~~~~~~~~~~$\\
+$~~~~~~~~${\bf else}\\
+$~~~~~~~~~~~~$$pos1$ $\leftarrow$ $choose\_random$($swappable\_sessions$)\\
+$~~~~~~~~~~~~$$unassigned\_sessions\_len$ $\leftarrow$ $length$($unassigned\_sessions$)\\
+$~~~~~~~~~~~~$$swappable\_sessions\_len$ $\leftarrow$ $length$($swappable\_sessions$)\\
+$~~~~~~~~~~~~$$total\_sessions\_len$ $\leftarrow$ $unassigned\_sessions\_len$ $+$ $swappable\_sessions\_len$\\
+$~~~~~~~~~~~~$$chance\_random\_session\_is\_unassigned$ $\leftarrow$ $unassigned\_sessions\_len$ $/$ $total\_sessions\_len$\\
+\\
+$~~~~~~~~~~~~${\bf if} $!$$empty$($unassigned\_sessions$) and $random\_bool$($chance\_random\_session\_is\_unassigned$)\\
+$~~~~~~~~~~~~~~~~$$unassigned\_idx$ $\leftarrow$ $random\_range$($0..$$unassigned\_sessions\_len$)\\
+$~~~~~~~~~~~~~~~~$$action$ $\leftarrow$ $swap\_unassigned$($pos1$$,$ $unassigned\_idx$)\\
+$~~~~~~~~~~~~~~~~$$schedule$ $\leftarrow$ $schedule$$.$$apply\_action$($action$)\\
+$~~~~~~~~~~~~${\bf else}\\
+$~~~~~~~~~~~~~~~~$$pos2$ $\leftarrow$ $choose\_random$($swappable\_sessions$)\\
+$~~~~~~~~~~~~~~~~$$action$ $\leftarrow$ $swap\_scheduled$($pos1$$,$ $pos2$)\\
+$~~~~~~~~~~~~~~~~$$schedule$ $\leftarrow$ $schedule$$.$$apply\_action$($action$)\\
+$~~~~~~~~$\\
+$~~~~~~~~${\bf if} $best\_action$ $!=$ $None$\\
+$~~~~~~~~~~~~$$schedule$ $\leftarrow$ $schedule$$.$$apply\_action$($action$)\\
+$~~~~~~~~~~~~$$current\_score$ $\leftarrow$ $best\_score$\\
+$~~~~~~~~${\bf else}\\
+$~~~~~~~~~~~~$continue\\
+$~~~~${\bf return} $current\_score$\\
+\end{tabbing}

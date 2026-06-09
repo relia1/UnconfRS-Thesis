@@ -1,0 +1,84 @@
+\documentclass[double,12pt]{psutex}
+\usepackage{graphicx}
+\usepackage{rotating} %Package added to allow the rotation of figures and chart on a page, {sidewaysfigure} command
+\usepackage{tablefootnote} %Packaged added to allow footnotes in the tabular environment, use \tablefootnote command
+
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{textcomp, gensymb} % for degree symbol
+\usepackage[dvipsnames]{xcolor} % colorbox for inline comments
+\usepackage{cite}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage[flushleft]{threeparttable}
+\usepackage{dcolumn}
+\usepackage{float}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{algorithm}
+
+\newcommand{\shortnote}[1]{\footnote{\color{red}#1}}
+
+\renewcommand{\arraystretch}{1.0}
+
+
+% -------------------------------------------------
+% Define variables needed to build the Title Page
+% -------------------------------------------------
+\title{An Unconference for the Rust of Us} % line break needs to be inserted manually for it to be double-spaced
+\author{Robert Elia}
+\graddegree{Bachelor of Science}
+\doctype{Thesis}
+\university{Portland State University}
+\department{Computer Science}
+\major{Computer Science}
+\submitdate{_, 2026}
+\commencementyear{2026}
+\committeemembers{Bart Massey}
+
+\usepackage{etoolbox} % For the flag determining if front matter goes into the TOC
+\usepackage{listings}
+\newtoggle{fulltoc}
+\toggletrue{fulltoc}  % Change to \togglefalse{fulltoc} to remove front matter
+
+
+
+\begin{document}
+
+\maketitle
+
+%-------------------------Pretext Pages----------------------------
+% Abstract
+\include{chapters/02-abstract}
+
+% Dedication
+% \include{chapters/04-dedication}
+
+% Acknowledgements
+\include{chapters/06-ack}
+
+%-------------------------Listings-----------------------------
+% Table of contents, list of figures, etc
+% Manually uncomment the listings for types that are present in the document
+\tableofcontents
+\listoftables
+\listoffigures
+% \listofnomenclatures
+% \listofappendices
+% \listofappendixfigures
+% \listofappendixtables
+
+%-------------------------Main Chapters-----------------------------
+\mainmatter
+
+\include{chapters/10-intro}
+\include{chapters/20-understanding-unconferences}
+\include{chapters/60-related-work}
+\include{chapters/30-scheduling}
+\include{chapters/40-software-solution}
+\include{chapters/70-results}
+\include{chapters/80-conclusion}
+\include{chapters/85-availability}
+\include{chapters/90-bib}
+\end{document}

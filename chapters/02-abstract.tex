@@ -1,0 +1,7 @@
+\chapter*{\centerline{Abstract}}
+\markboth{\MakeUppercase{Abstract}}{}
+\iftoggle{fulltoc}{
+  \addcontentsline{toc}{chapter}{Abstract}
+}{}
+
+An Unconference is a gathering of like-minded individuals who organize on the spot, with content driven by the collective interests and expertise of the participants. While digital conference tools are plentiful, they lack support for Unconferences, automatic scheduling, or both. UnconfRS is a full-stack web application built using Rust that enables participants to propose sessions, vote on them, and have a schedule generated using a heuristic-based local search with random restarts and simplified simulated annealing. The scheduler is evaluated against an exhaustive brute force search. The results show that it is able to find good schedules while running approximately 380 times faster than brute force on a small benchmark. These results demonstrate that local search techniques can produce good Unconference schedules. Additionally, it shows that Rust is well-suited for implementing the backend and the scheduler.

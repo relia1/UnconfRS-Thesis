@@ -1,0 +1,16 @@
+\chapter{Related Work}\label{ch:related Work}
+
+\section{Existing Unconference Platforms}
+Pretalx \cite{kunze2017} is a full-featured open-source conference management tool that handles submission and review, selection, and scheduling of sessions. It also has an extension ecosystem that could support the participant-driven session proposals and voting used in Unconferences. However, while its scheduling features are extensive, schedule construction is a manual process. UnconfRS automates schedule generation.
+
+The Xen Project session-scheduler \cite{dunlap2018} is the most comparable existing tool to UnconfRS. It is an open-source web application for scheduling Unconference sessions written in Go. It enables users to propose sessions, express a level of interest in each session, and have schedules generated that maximize participation. UnconfRS, which is written in Rust, shares much of this. It also has these goals: have desirable sessions happen earlier in the day, avoid concurrent sessions on the same topic, minimize overlap of popular sessions, and reduce conflicts where speakers miss sessions they wanted to attend due to them leading another session at the same time. Additionally, UnconfRS utilizes local search for the scheduling.
+
+\section{Scheduling Approaches}
+Kim et al. \cite{kim2013} introduced Cobi, a community-informed conference scheduling tool at CHI 2013. Cobi utilizes community input in the form of schedule preferences and constraints. Using constraint-solving provides organizers with context for the state of the current schedule, such as if there are session conflicts and can provide suggestions for how to best improve the schedule. However, this is an intentional manual process. UnconfRS opts for schedule generation to utilize community input to generate a schedule, but allow manual tweaks for fine tuning. 
+
+Riquelme et al. \cite{riquelme2022} compared using a Gurobi solver and a heuristic method based on simulated annealing for solving a track-based conference scheduling problem. They found that when the Gurobi solver was able to find optimal solutions, the simulated annealing approach was able to find solutions quicker. In situations where Gurobi solver was not able to find a solution in time, the simulated annealing approach found near-optimal solutions. UnconfRS similarly utilizes local search with simulated annealing to find good solutions quickly.
+
+
+%Rezaeinia et al. \cite{rezaeinia2024}
+%Scheduling conferences using data on attendees’ preferences
+%\url{https://doi.org/10.1080/01605682.2024.2310722}

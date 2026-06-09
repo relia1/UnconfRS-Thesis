@@ -1,0 +1,36 @@
+% \begin{tabbing}Penalty {\bf for} concurrent $sessions$ that conflict with $sessions$ the speaker voted {\bf for} {\bf in} $Timeslots$$:$\\
+% $~~~~$$speaker\_conflict$ $\leftarrow$ $0$\\
+% $~~~~${\bf for} $i$ {\bf in} $0..$length($Timeslots$) $-$ $1$\\
+% $~~~~~~~~$$sessions$ $\leftarrow$ list of $sessions$ at $Timeslots$$[$$i$$]$\\
+% $~~~~~~~~$$num\_sessions$ $\leftarrow$ length($sessions$)\\
+% $~~~~~~~~$$speaker\_conflict\_slot$ $\leftarrow$ $0$\\
+% $~~~~~~~~${\bf for} $j$ {\bf in} $0..$$num\_sessions$ $-$ $1$\\
+% $~~~~~~~~~~~~$$speaker\_votes$ $\leftarrow$ the list of $sessions$$[$$j$$].$$speaker\_votes$\\
+% $~~~~~~~~~~~~${\bf for} $k$ {\bf in} $0..$$num\_sessions$ $-$ $1$\\
+% $~~~~~~~~~~~~~~~~${\bf if} $k$ $!=$ $j$\\
+% $~~~~~~~~~~~~~~~~~~~~${\bf if} $sessions$$[$$j$$].$$session\_id$ {\bf in} $speaker\_votes$\\
+% $~~~~~~~~~~~~~~~~~~~~~~~~$$session\_j\_votes$ $\leftarrow$ max($sessions$$[$$j$$].$votes$,$ $1$)\\
+% $~~~~~~~~~~~~~~~~~~~~~~~~$$session\_k\_votes$ $\leftarrow$ max($sessions$$[$$k$$].$votes$,$ $1$)\\
+% $~~~~~~~~~~~~~~~~~~~~~~~~$$speaker\_conflict\_session$ $\leftarrow$ $session\_j\_votes$ $*$ $session\_k\_votes$\\
+% $~~~~~~~~~~~~~~~~~~~~~~~~$$speaker\_conflict\_slot$ $\leftarrow$ $speaker\_conflict\_slot$ $+$ $speaker\_conflict\_session$\\
+% $~~~~~~~~$$speaker\_conflict$ $\leftarrow$ $speaker\_conflict$ $+$ $speaker\_conflict\_slot$\\
+% $~~~~${\bf return} $speaker\_conflict$\\
+% \end{tabbing}
+\begin{tabbing}Penalty {\bf for} concurrent $\textit{sessions}$ that conflict with $\textit{sessions}$ the speaker voted {\bf for} {\bf in} $\textit{Timeslots}$$:$\\
+$~~~~$$\textit{speaker\_conflict}$ $\leftarrow$ $0$\\
+$~~~~${\bf for} $\textit{i}$ {\bf in} $0..$$\textit{length}$($\textit{Timeslots}$) $-$ $1$\\
+$~~~~~~~~$$\textit{sessions}$ $\leftarrow$ list of $\textit{sessions}$ at $\textit{Timeslots}$$[$$\textit{i}$$]$\\
+$~~~~~~~~$$\textit{num\_sessions}$ $\leftarrow$ $\textit{length}$($\textit{sessions}$)\\
+$~~~~~~~~$$\textit{speaker\_conflict\_slot}$ $\leftarrow$ $0$\\
+$~~~~~~~~${\bf for} $\textit{j}$ {\bf in} $0..$$\textit{num\_sessions}$ $-$ $1$\\
+$~~~~~~~~~~~~$$\textit{speaker\_votes}$ $\leftarrow$ the list of $\textit{sessions}$$[$$\textit{j}$$].$$\textit{speaker\_votes}$\\
+$~~~~~~~~~~~~${\bf for} $\textit{k}$ {\bf in} $0..$$\textit{num\_sessions}$ $-$ $1$\\
+$~~~~~~~~~~~~~~~~${\bf if} $\textit{k}$ $!=$ $\textit{j}$\\
+$~~~~~~~~~~~~~~~~~~~~${\bf if} $\textit{sessions}$$[$$\textit{j}$$].$$\textit{session\_id}$ {\bf in} $\textit{speaker\_votes}$\\
+$~~~~~~~~~~~~~~~~~~~~~~~~$$\textit{session\_j\_votes}$ $\leftarrow$ max($\textit{sessions}$$[$$\textit{j}$$].$votes$,$ $1$)\\
+$~~~~~~~~~~~~~~~~~~~~~~~~$$\textit{session\_k\_votes}$ $\leftarrow$ max($\textit{sessions}$$[$$\textit{k}$$].$votes$,$ $1$)\\
+$~~~~~~~~~~~~~~~~~~~~~~~~$$\textit{speaker\_conflict\_session}$ $\leftarrow$ $\textit{session\_j\_votes}$ $*$ $\textit{session\_k\_votes}$\\
+$~~~~~~~~~~~~~~~~~~~~~~~~$$\textit{speaker\_conflict\_slot}$ $\leftarrow$ $\textit{speaker\_conflict\_slot}$ $+$ $\textit{speaker\_conflict\_session}$\\
+$~~~~~~~~$$\textit{speaker\_conflict}$ $\leftarrow$ $\textit{speaker\_conflict}$ $+$ $\textit{speaker\_conflict\_slot}$\\
+$~~~~${\bf return} $\textit{speaker\_conflict}$\\
+\end{tabbing}
